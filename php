@@ -24,5 +24,13 @@ catch (Exception $e)
 		echo $_POST['adresse'];
 		echo '<br/>';
 		echo $_POST['diplome'];
+
+$id = '1';
+$etablissement = $_POST[etablissement'];
+$req = $bdd->prepare('INSERT INTO etablissement(idetablissement, Libelle) VALUES(:id, :libelle)');
+$req->execute(array(
+	'id' => $id,
+	'libelle' => $etablissement
+	));
 		
 ?>
