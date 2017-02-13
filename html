@@ -7,22 +7,69 @@
 <body>
 	<form action="phpformulaire.php" method="post">
 		<p>Etablissement <input type="text" required="required" name="etablissement" placeholder="Ex: Lycée St Joseph">
-		<br>Section de provenance <input type="text" name="sectionp" placeholder="Ex: Lycée St Joseph">
+		<br>Section de provenance <input type="text" required="required" name="sectionp" placeholder="Ex: Lycée St Joseph">
 		<br>Section du visiteur <select name="sectionv">
-   			 <option value="choix1">Choix 1</option>
-   			 <option value="choix2">Choix 2</option>
-   			 <option value="choix3">Choix 3</option>
-   			 <option value="choix4">Choix 4</option>
+   			 <option value="$donn['Libelle']"></option>
+   			 <option value="choix2"></option>
 		</select> 
-		<br>Code postal <input type="text" name="codepostal" placeholder="Ex: 21000">
-		<br>Connaissances du lycée <input type="text" name="connaissances" placeholder="Ex: amis,journal">
-		<br>Nom <input type="text" name="nom">
-		<br>Prénom <input type="text" name="prenom">
+		<br>Code postal <input type="text" name="codepostal" placeholder="Ex: 21000" required="required">
+		<br>Connaissances du lycée
+
+		<?php
+		try
+		{
+		$bdd = new PDO('mysql:host=localhost;dbname=tablemougo;charset=utf8', 'sarpenter', '6783du02');
+		}
+		catch (Exception $e)
+		{
+        die('Erreur : ' . $e->getMessage());
+		}
+
+		$rep = $bdd->query('SELECT * FROM connaissance');
+		echo '<select name="connaissances">';
+		while ($donnees = $rep->fetch())
+		{
+		?>
+		<option value="<?php echo $donnees['Libelle']; ?>"><?php echo $donnees['Libelle']; ?></option>
+		<?php
+		}
+		?>
+		<option value="autre">Autres</option>
+		
+		</select>
+		<?php
+		$rep->closeCursor(); // Déconnexion de MySQL
+		?>
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		<br>Nom <input type="text" name="nom" required="required">
+		<br>Prénom <input type="text" name="prenom" required="required">
 		<br>Adresse mail <input type="text" name="adresse">
-		<br>Diplôme <input type="text" name="diplome">
+		<br>Diplôme <input type="text" name="diplome" required="required">
 		<br><input type="submit" name="Valider">
 		</p>
 	</form>
-	
 </body>
 </html>
